@@ -2,114 +2,100 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Đăng ký học phần HK2</title>
+  <title>Countdown Đăng ký học phần HK2</title>
   <style>
-    * {
+body {
+  margin: 0;
+  height: 100vh;
+  background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+#countdown {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-    }
-
-    body {
-      height: 100vh;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-      background-size: cover;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-      backdrop-filter: brightness(0.9);
+      height: 100vh;
+      background: url('https://i.imgur.com/ECq4r1p.jpg') no-repeat center center;
+      background-size: cover;
+      color: #ffffff;
+      font-family: sans-serif;
+      text-shadow: 1px 1px 2px #000;
     }
-
-    h1 {
-      font-size: 2.4rem;
-      margin-bottom: 30px;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 12px 24px;
-      border-radius: 12px;
-    }
-
     .countdown {
-      display: flex;
-      gap: 25px;
-    }
-
-    .time-box {
       text-align: center;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 20px 30px;
-      border-radius: 16px;
-      backdrop-filter: blur(3px);
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 20px 40px;
+      border-radius: 10px;
     }
-
-    .time-box span {
-      display: block;
-      font-size: 2.4rem;
-      font-weight: 600;
+    .countdown h1 {
+      margin-bottom: 20px;
+      font-size: 2em;
     }
-
-    .label {
-      font-size: 1rem;
-      opacity: 0.85;
+    .time {
+      font-size: 2.5em;
     }
-
-    footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.9rem;
-      opacity: 0.8;
+    .time span {
+      margin: 0 10px;
     }
   </style>
 </head>
 <body>
-  <h1>⏰ Đếm ngược đến lúc Đăng ký học phần HK2</h1>
   <div class="countdown">
-    <div class="time-box">
-      <span id="days">00</span>
-      <div class="label">Ngày</div>
-    </div>
-    <div class="time-box">
-      <span id="hours">00</span>
-      <div class="label">Giờ</div>
-    </div>
-    <div class="time-box">
-      <span id="minutes">00</span>
-      <div class="label">Phút</div>
-    </div>
-    <div class="time-box">
-      <span id="seconds">00</span>
-      <div class="label">Giây</div>
+    <h1>Đăng ký học phần HK2</h1>
+    <div class="time" id="time">
+      <span id="days">--</span>ngày  
+      <span id="hours">--</span>giờ  
+      <span id="minutes">--</span>phút  
+      <span id="seconds">--</span>giây  
     </div>
   </div>
-  <footer>GMT+7 (Việt Nam) • Ngày đăng ký: 10:00 sáng 01/12/2025</footer>
 
   <script>
-    const target = new Date("2025-12-01T10:00:00+07:00").getTime();
+    // Múi giờ Việt Nam là GMT+7 — offset = +7h
+    const target = new Date("2025-12-01T10:00:00+07:00");
 
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = target - now;
+    function updateCountdown() {
+      const now = new Date();
+      const diff = target - now;
 
-      if (distance <= 0) {
+      if (diff <= 0) {
+        document.getElementById("time").innerHTML = "Đã đến thời gian!";
         clearInterval(timer);
-        document.querySelector(".countdown").innerHTML = "<h2>Đến giờ đăng ký rồi! 🎉</h2>";
         return;
       }
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-      document.getElementById("days").innerText = days;
-      document.getElementById("hours").innerText = hours;
-      document.getElementById("minutes").innerText = minutes;
-      document.getElementById("seconds").innerText = seconds;
-    }, 1000);
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
